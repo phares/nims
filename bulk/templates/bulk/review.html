@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block title %} All post {% endblock title %}
+
+
+{% block content %}
+<div class="container">
+    <div class="page-content">
+        <!-- PAGE CONTENT WRAPPER -->
+            <div class="page-content-wrap">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="review-heading">Review and Send</h1>
+                        <!-- START DEFAULT DATATABLE -->
+                        <div class="panel panel-default">
+
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Phone</th>
+                                                <th>Amount</th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody>
+
+                                        <p style="color:blue;">You've uploaded {{file}}</p>
+
+                                                <tr>
+                                                    <td>Phares</td>
+                                                    <td>Abunga</td>
+                                                    <td>0719301140</td>
+                                                    <td>20000</td>
+                                                </tr>
+
+
+                                        <p style="color:red;">uploadfile null</p>
+
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td style="color:red;"></td>
+                                                </tr>
+
+                                        <p style="color:red;">error</p>
+
+                                        </tbody>
+                                        <tr>
+                                                    <th><strong>No of Recipients: {{user_sum}}  </strong> </th>
+                                                    <th></th>
+                                                    <th><strong>Total Amount: Ksh. {{amount_sum}}  </strong> </th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END DEFAULT DATATABLE -->
+
+                    <form method="post" action="/bulk/status">
+                        <div class="upload-buttons table">
+                            <button type="submit" class="btn btn-primary" align="right" data-toggle="" data-target="" >SEND</button>
+                        </div>
+
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel">Payment Scheduled. </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Hi User,</p>
+                                        <p>Your payment has successfully been scheduled.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                </form>
+
+
+                                <!-- Modal -->
+
+
+
+            </div>
+        </div>
+
+    </div>
+                <!-- PAGE CONTENT WRAPPER -->
+</div>
+</div>
+{% endblock content %}

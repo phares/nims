@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %} status {% endblock title %}
+
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="instructions">
+			<h1>Payment succesfully sent</h1>
+
+
+            {{mydata}}
+
+
+			<p class="more-instructions"><span><a href="#">View payment reports</a></span>
+			</p>
+
+			<div class="upload-buttons">
+				<a href="/uploadform"><button class="btn btn-primary">make new payment</button></a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

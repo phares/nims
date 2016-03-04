@@ -15,14 +15,14 @@ class User(models.Model):
     def __str__(self):
         return self.organization
 
-class Transaction(models.Model):
+class Transactions(models.Model):
     '''
     Define nims transactions table
     '''
     first_name = models.CharField(max_length=10)
     last_name = models.CharField(max_length=10)
     mobile_number = models.CharField(max_length=10)
-    transaction_amount = models.DecimalField(max_digits=6, decimal_places=2)
+    transaction_amount = models.DecimalField(max_digits=7, decimal_places=2)
     transaction_code = models.CharField(max_length=10)
     transaction_date_time = models.DateTimeField(auto_now_add=True, auto_now=False)
     organization = models.CharField(max_length=50)
