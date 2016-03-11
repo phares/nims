@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^', include('bulk.urls')),
     url(r'^bulk/', include('bulk.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^accounts/', include('registration.backends.hmac.urls')),
+    url(r'^accounts/', include('registration.backends.default.urls')),
 ]
 
 if settings.DEBUG:
