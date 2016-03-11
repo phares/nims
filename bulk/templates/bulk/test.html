@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test file</title>
+</head>
+<body>
+{{ title }}<br/><br/>
+
+<!--{{ queryset }}<br/> -->
+
+{% for obj in queryset %}
+
+     {{obj.id}}
+    <!--<a href="/bulk/test/{{obj.id}}/"> {{obj.first_name}}</a> -->
+    <a href='{% url "test_detail" id=obj.id %}'> {{obj.first_name}}</a>
+     {{obj.last_name}}
+     {{obj.transaction_code}}<br/>
+
+{% endfor %}
+
+<br/>
+
+{{ instance }}
+
+</body>
+</html>

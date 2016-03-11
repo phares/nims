@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-
+from django.core.urlresolvers import reverse
 from django.db import models
 
 class User(models.Model):
@@ -30,6 +30,10 @@ class Transactions(models.Model):
 
     def __str__(self):
         return self.transaction_code
+
+    def get_absolute_url(self):
+        return reverse("bulk:test_detail", kwargs={"id": self.id})
+
 
 class Wallet(models.Model):
     '''

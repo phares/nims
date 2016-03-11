@@ -1,8 +1,14 @@
-{% extends 'base.html' %}
+ {% extends 'base.html' %}
+
+
+ {% load staticfiles %}
+
 {% block title %} All post {% endblock title %}
 
-
 {% block content %}
+
+ {% include 'navbar.html' %}
+
 <div class="container">
     <div class="page-content">
         <!-- PAGE CONTENT WRAPPER -->
@@ -100,3 +106,4 @@
 </div>
 </div>
 {% endblock content %}
+
