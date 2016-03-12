@@ -77,10 +77,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <li class=""><a href="#featuress">Features</a></li>
             <li class=""><a href="#istanbul-winners">Winners</a></li>
             <li class=""><a href="http://blog.nims.co.ke/" target="_blank">Blog</a></li>
-            <li class=""><a href="/accounts/login">Login</a></li>
-            <li class="nav-signup"><a href="/accounts/register">Register</a></li>
-          </ul> 
+            <!--<li class=""><a href="/accounts/login">Login</a></li> -->
+            {% if request.user.is_authenticated  %}
+            <li class=""><a href="{% url 'auth_logout' %}">Logout {{ request.user }} </a></li>
+            {% else %}
+            <li class="nav-signup"><a href="{% url 'registration_register' %}">Register</a></li>
+            {% endif %}
 
+          </ul>
         </div>
       </div>
     </nav> 
@@ -112,6 +116,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </script>
 
 <!-- End of Navbar -->
+
+<!-- User log in -->
+   {% if not request.user.is_authenticated and not "/accounts/login" in request.get_full_path %}
+        <div STYLE="margin-right: 150px">
+            <form class="navbar-form navbar-right" method="POST" action='{% url "auth_login" %}'> {% csrf_token %}
+              <div class="form-group">
+                <input type="text" class="form-control" name="username" placeholder="Username" />
+              </div>
+
+              <div class="form-group">
+                <input type="password" class="form-control" name="password" placeholder="Password" />
+              </div>
+
+              <button type="submit" class="btn btn-default">Login</button>
+            </form>
+        </div>
+   {% endif %}
+<!-- End user log in -->
 
 <!-- Jumbotron -->
   <div class="jumbotron">
