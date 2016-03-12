@@ -1,19 +1,42 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from bulk.models import Transactions
 from .forms import PostForm
+from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
+from django.template import RequestContext
+from django.shortcuts import render_to_response
+from django.http import HttpResponseBadRequest, JsonResponse, HttpResponse
+import django_excel as excel
+import pyexcel.ext.xls
+import pyexcel.ext.xlsx
+import pyexcel.ext.ods3
 
 # Create your views here.
+class UploadFileForm(forms.Form):
+    file = forms.FileField()
 
 def landing(request):
 
     return render(request, 'landing.html')
 
-def index(request):
+def upload(request):
+    if request.method == "POST":
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            filehandle = request.FILES['file']
+            filehandle.name
+            return redirect("bulk:review")
+            #return excel.make_response(filehandle.get_sheet(), "csv", file_name="download")
+    else:
+        form = UploadFileForm()
+    return render_to_response(
+        'bulk/upload.html',
+        {
+            'form': form,
+        },
+        context_instance=RequestContext(request))
 
-    data = {'mydata': "upload"}
-    return render(request, 'bulk/index.html', data)
 
 def review(request):
 

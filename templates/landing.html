@@ -79,7 +79,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <li class=""><a href="http://blog.nims.co.ke/" target="_blank">Blog</a></li>
             <!--<li class=""><a href="/accounts/login">Login</a></li> -->
             {% if request.user.is_authenticated  %}
-            <li class=""><a href="{% url 'auth_logout' %}">Logout {{ request.user }} </a></li>
+            <li class=""><a href="{% url 'auth_logout' %}">Logout</a></li>
+            <li class=""><a href="#">{{ request.user }} </a></li>
+            <li class=""><a class="list-group-item" href="/bulk"><i class="fa fa-home fa-fw"></i>&nbsp; bulk</a></li>
             {% else %}
             <li class="nav-signup"><a href="{% url 'registration_register' %}">Register</a></li>
             {% endif %}

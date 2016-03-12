@@ -13,7 +13,8 @@
 
             {% if request.user.is_authenticated  %}
             <li class=""><a href="/bulk/index/">Upload</a></li>
-            <li class=""><a href="{% url 'auth_logout' %}">Logout {{ request.user }} </a></li>
+            <li class=""><a href="{% url 'auth_logout' %}">Logout</a></li>
+            <li class=""><a href="#">{{ request.user }} </a></li>
             {% else %}
             <li class=""><a href="{% url 'registration_register' %}">Register</a></li>
             {% endif %}
