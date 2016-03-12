@@ -13,10 +13,24 @@
 
             {% if request.user.is_authenticated  %}
             <li class=""><a href="/bulk/index/">Upload</a></li>
-            <li class=""><a href="/accounts/logout/">Logout {{ request.user }} </a></li>
+            <li class=""><a href="{% url 'auth_logout' %}">Logout {{ request.user }} </a></li>
             {% else %}
-            <li class=""><a href="/accounts/login">Login</a></li>
-            <li class=""><a href="/accounts/register">Register</a></li>
+            <li class=""><a href="{% url 'registration_register' %}">Register</a></li>
+            {% endif %}
+
+            {% if not request.user.is_authenticated and not "/accounts/login" in request.get_full_path %}
+            <form class="navbar-form navbar-right" method="POST" action='{% url "auth_login" %}'> {% csrf_token %}
+              <div class="form-group">
+                <input type="text" class="form-control" name="username" placeholder="Username" />
+              </div>
+
+                <div class="form-group">
+                <input type="password" class="form-control" name="password" placeholder="Password" />
+              </div>
+
+              <button type="submit" class="btn btn-default">Login</button>
+
+            </form>
             {% endif %}
 
           </ul> 
