@@ -32,33 +32,18 @@
 
                                         </thead>
                                         <tbody>
+                                                {{ name }}<br/>
+                                                {{ size }} bytes<br/>
+                                                {{ content_type }}<br/>
 
-                                        <p style="color:blue;">You've uploaded {{file}}</p>
-
-                                                <tr>
-                                                    <td>Phares</td>
-                                                    <td>Abunga</td>
-                                                    <td>0719301140</td>
-                                                    <td>20,000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>John</td>
-                                                    <td>Karanja</td>
-                                                    <td>0725364788</td>
-                                                    <td>12,500</td>
-                                                </tr>
-
-
-                                        <p style="color:red;">uploadfile null</p>
-
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td style="color:red;"></td>
-                                                </tr>
-
-                                        <p style="color:red;">error</p>
+                                                {% for p in list %}
+                                                  <tr>
+                                                    <td>{{p.LastName}}</td>
+                                                    <td>{{p.FirstName}}</td>
+                                                    <td>{{p.Phone}}</td>
+                                                    <td>{{p.Amount}}</td>
+                                                  </tr><br/>
+                                                {% endfor %}
 
                                         </tbody>
                                         <tr>

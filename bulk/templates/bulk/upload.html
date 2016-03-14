@@ -44,11 +44,18 @@
 
 				{{ name }}<br/>
 				{{ size }} bytes<br/>
-				{{ content_type }}<br/><br/>
-				{{ list }}<br/>
-				{{ read }}
-				{{ charset }}
+				{{ content_type }}<br/>
 
+				<table style="width:70%">
+				{% for p in list %}
+				  <tr>
+					<td>{{p.LastName}}</td>
+					<td>{{p.FirstName}}</td>
+					<td>{{p.Phone}}</td>
+					<td>{{p.Amount}}</td>
+				  </tr><br/>
+				{% endfor %}
+				</table>
 
 
 			    <script>

@@ -34,7 +34,6 @@ def upload(request):
         name = []
         size = []
         content_type = []
-        read = []
         charset = []
 
 
@@ -47,10 +46,19 @@ def upload(request):
                     name = filehandle.name
                     size = filehandle.size
                     content_type = filehandle.content_type
-                    read = filehandle.read
                     charset = filehandle.charset
-
-
+                    #generator = ( item['Phone'] for item in list )
+                    return render_to_response(
+                            'bulk/review.html',
+                            {
+                                'form': form,
+                                'list':list,
+                                'name':name,
+                                'size':size,
+                                'content_type':content_type,
+                                'charset':charset,
+                            },
+                        context_instance=RequestContext(request))
                 else:
                     return HttpResponseBadRequest()
         else:
@@ -63,7 +71,6 @@ def upload(request):
                 'name':name,
                 'size':size,
                 'content_type':content_type,
-                'read':read,
                 'charset':charset,
             },
             context_instance=RequestContext(request))
