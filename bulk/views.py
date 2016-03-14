@@ -35,6 +35,8 @@ def upload(request):
         size = []
         content_type = []
         charset = []
+        total_amount = 0
+        total_recipients = 0
 
 
         if request.method == "POST":
@@ -47,7 +49,13 @@ def upload(request):
                     size = filehandle.size
                     content_type = filehandle.content_type
                     charset = filehandle.charset
-                    #generator = ( item['Phone'] for item in list )
+                    #Generator
+                    ta = ( item['Amount'] for item in list )
+
+                    for a in ta:
+                        total_amount +=a
+                        total_recipients +=1
+
                     return render_to_response(
                             'bulk/review.html',
                             {
@@ -57,6 +65,8 @@ def upload(request):
                                 'size':size,
                                 'content_type':content_type,
                                 'charset':charset,
+                                'total':total_amount,
+                                'recipients':total_recipients,
                             },
                         context_instance=RequestContext(request))
                 else:

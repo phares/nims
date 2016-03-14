@@ -7,6 +7,8 @@
 
 {% block content %}
 
+ {% load humanize %}
+
  {% include 'navbar.html' %}
 
 <div class="container">
@@ -22,34 +24,34 @@
                             <div class="panel-body">
                                 <div class="table-responsive">
                                     <table class="table datatable">
+                                                <h5 style="color:#777777;">File Name - {{ name }}</h5>
+                                                <h5 style="color:#777777;">File Size - {{ size }} bytes</h5>
+                                                <h5 style="color:#777777;">File Content type - {{ content_type }}</h5>
                                         <thead>
                                             <tr>
                                                 <th>First Name</th>
                                                 <th>Last Name</th>
                                                 <th>Phone</th>
-                                                <th>Amount</th>
+                                                <th>Amount (KES)</th>
                                             </tr>
-
                                         </thead>
                                         <tbody>
-                                                {{ name }}<br/>
-                                                {{ size }} bytes<br/>
-                                                {{ content_type }}<br/>
 
                                                 {% for p in list %}
                                                   <tr>
                                                     <td>{{p.LastName}}</td>
                                                     <td>{{p.FirstName}}</td>
                                                     <td>{{p.Phone}}</td>
-                                                    <td>{{p.Amount}}</td>
-                                                  </tr><br/>
+                                                    <td>{{p.Amount|intcomma}}</td>
+                                                  </tr>
                                                 {% endfor %}
 
                                         </tbody>
                                         <tr>
-                                                    <th><strong>No of Recipients: {{user_sum}}  </strong> </th>
-                                                    <th></th>
-                                                    <th><strong>Total Amount: Ksh. {{amount_sum}}  </strong> </th>
+                                                    <th><strong>No of Recipients:   </strong> </th>
+                                                    <th>{{ recipients|intcomma }} contacts</th>
+                                                    <th><strong>Total Amount:  </strong> </th>
+                                                    <th>{{ total|intcomma }} (KES)</th>
                                         </tr>
                                     </table>
                                 </div>

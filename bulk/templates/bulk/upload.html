@@ -40,23 +40,6 @@
 					<button type="submit" name="uploadfile" id="uploadfile" value="" class="btn btn-primary"><i class="fa fa-upload"></i>Upload file </button>
 				</form>
 
-				<br/><br/>
-
-				{{ name }}<br/>
-				{{ size }} bytes<br/>
-				{{ content_type }}<br/>
-
-				<table style="width:70%">
-				{% for p in list %}
-				  <tr>
-					<td>{{p.LastName}}</td>
-					<td>{{p.FirstName}}</td>
-					<td>{{p.Phone}}</td>
-					<td>{{p.Amount}}</td>
-				  </tr><br/>
-				{% endfor %}
-				</table>
-
 
 			    <script>
                     $(document).ready(function () {
