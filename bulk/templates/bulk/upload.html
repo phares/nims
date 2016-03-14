@@ -27,7 +27,7 @@
 				<p style="color: red;">
 					Please correct the error{{ form.errors|pluralize }} below.
 				</p>
-			<br/><br/>
+			<br/>
 			{% endif %}
 				<form action="" method="POST" enctype="multipart/form-data" class="upload-form">
 
@@ -38,7 +38,18 @@
 					<!-- <label for="file" class="btn btn-primary btn-lg"><i class="fa fa-upload"></i>Upload an Excel file</label -->
 
 					<button type="submit" name="uploadfile" id="uploadfile" value="" class="btn btn-primary"><i class="fa fa-upload"></i>Upload file </button>
-					</form>
+				</form>
+
+				<br/><br/>
+
+				{{ name }}<br/>
+				{{ size }} bytes<br/>
+				{{ content_type }}<br/><br/>
+				{{ list }}<br/>
+				{{ read }}
+				{{ charset }}
+
+
 
 			    <script>
                     $(document).ready(function () {

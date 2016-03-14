@@ -12,6 +12,11 @@ import pyexcel.ext.xls
 import pyexcel.ext.xlsx
 import pyexcel.ext.ods3
 
+global list
+global a
+global b
+global c
+
 # Create your views here.
 class UploadFileForm(forms.Form):
     file = forms.FileField()
@@ -20,34 +25,73 @@ def landing(request):
 
     return render(request, 'landing.html')
 
+#Uploading file
+
 def upload(request):
-    if request.method == "POST":
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            filehandle = request.FILES['file']
-            filehandle.name
-            return redirect("bulk:review")
-            #return excel.make_response(filehandle.get_sheet(), "csv", file_name="download")
+    data_struct_type = "records"
+    if request.user.is_authenticated():
+        list = {}
+        name = []
+        size = []
+        content_type = []
+        read = []
+        charset = []
+
+
+        if request.method == "POST":
+            form = UploadFileForm(request.POST, request.FILES)
+            if form.is_valid():
+                filehandle = request.FILES['file']
+                if data_struct_type == "records":
+                    list= filehandle.get_records()
+                    name = filehandle.name
+                    size = filehandle.size
+                    content_type = filehandle.content_type
+                    read = filehandle.read
+                    charset = filehandle.charset
+
+
+                else:
+                    return HttpResponseBadRequest()
+        else:
+            form = UploadFileForm()
+        return render_to_response(
+            'bulk/upload.html',
+            {
+                'form': form,
+                'list':list,
+                'name':name,
+                'size':size,
+                'content_type':content_type,
+                'read':read,
+                'charset':charset,
+            },
+            context_instance=RequestContext(request))
     else:
-        form = UploadFileForm()
-    return render_to_response(
-        'bulk/upload.html',
-        {
-            'form': form,
-        },
-        context_instance=RequestContext(request))
+        return redirect("/accounts/login")
+
+#Handling the uploaded file
+def handle_uploaded_file(f):
+    with open('/home/isp/workspace/nims/name.odt', 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
 
 
 def review(request):
+    if request.user.is_authenticated():
 
-    data = {'mydata': "review"}
-    return render(request, 'bulk/review.html', data)
+        return render(request, 'bulk/review.html')
+    else:
+        return redirect("/accounts/login")
 
 def status(request):
+    if request.user.is_authenticated():
 
-    mydata = Transactions.objects.all()
-    data = {'mydata': mydata}
-    return render(request, 'bulk/status.html', data)
+        mydata = Transactions.objects.all()
+        data = {'mydata': mydata}
+        return render(request, 'bulk/status.html', data)
+    else:
+        return redirect("/accounts/login")
 
 def test(request, id=None):
 
