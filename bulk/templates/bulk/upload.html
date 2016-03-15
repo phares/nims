@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% include 'templates/navbar.html' %}
-{% block title %} All post {% endblock title %}
+{% block title %} NIMS | file upload {% endblock title %}
 
 
 {% block content %}
@@ -34,8 +34,6 @@
 					{{ form.as_table }}
 
 					{% csrf_token %}
-					<!--<input type="file" name="file" value="" id="file" required>
-					<!-- <label for="file" class="btn btn-primary btn-lg"><i class="fa fa-upload"></i>Upload an Excel file</label -->
 
 					<button type="submit" name="uploadfile" id="uploadfile" value="" class="btn btn-primary"><i class="fa fa-upload"></i>Upload file </button>
 				</form>

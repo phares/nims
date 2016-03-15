@@ -26,5 +26,7 @@ urlpatterns = [
     url(r'^accounts/', include('registration.backends.default.urls')),
 ]
 
+admin.site.site_header = 'nims.co.ke administration'
+
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -3,7 +3,7 @@
 
  {% load staticfiles %}
 
-{% block title %} All post {% endblock title %}
+{% block title %} NIMS | upload review {% endblock title %}
 
 {% block content %}
 
@@ -31,7 +31,7 @@
                                             <tr>
                                                 <th>First Name</th>
                                                 <th>Last Name</th>
-                                                <th>Phone</th>
+                                                <th>Deposit Phone. No.</th>
                                                 <th>Amount (KES)</th>
                                             </tr>
                                         </thead>
@@ -41,8 +41,8 @@
                                                   <tr>
                                                     <td>{{p.LastName}}</td>
                                                     <td>{{p.FirstName}}</td>
-                                                    <td>{{p.Phone}}</td>
-                                                    <td>{{p.Amount|intcomma}}</td>
+                                                    <td>+{{p.Phone}}</td>
+                                                    <td class="align-right">{{p.Amount|floatformat:2|intcomma}}</td>
                                                   </tr>
                                                 {% endfor %}
 
@@ -51,7 +51,8 @@
                                                     <th><strong>No of Recipients:   </strong> </th>
                                                     <th>{{ recipients|intcomma }} contacts</th>
                                                     <th><strong>Total Amount:  </strong> </th>
-                                                    <th>{{ total|intcomma }} (KES)</th>
+                                                    <!--<th>{{ total|intcomma }} (KES)</th>-->
+                                                    <th>{{ total|floatformat:2|intcomma }} (KES)</th>
                                         </tr>
                                     </table>
                                 </div>

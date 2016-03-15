@@ -27,8 +27,21 @@ def landing(request):
 
 #Uploading file
 
+"""
+                2.5MB - 2621440
+                5MB - 5242880
+                10MB - 10485760
+                20MB - 20971520
+                50MB - 5242880
+                100MB 104857600
+                250MB - 214958080
+                500MB - 429916160
+"""
+
 def upload(request):
     data_struct_type = "records"
+    content_types = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
+    max_upload_size = 5242880 #5MB
     if request.user.is_authenticated():
         list = {}
         name = []
@@ -49,26 +62,33 @@ def upload(request):
                     size = filehandle.size
                     content_type = filehandle.content_type
                     charset = filehandle.charset
-                    #Generator
-                    ta = ( item['Amount'] for item in list )
 
-                    for a in ta:
-                        total_amount +=a
-                        total_recipients +=1
+                    if content_type in content_types:
+                        if size > max_upload_size:
+                            return HttpResponseBadRequest('file size too big, maintain below 5 mbs')
 
-                    return render_to_response(
-                            'bulk/review.html',
-                            {
-                                'form': form,
-                                'list':list,
-                                'name':name,
-                                'size':size,
-                                'content_type':content_type,
-                                'charset':charset,
-                                'total':total_amount,
-                                'recipients':total_recipients,
-                            },
-                        context_instance=RequestContext(request))
+                        #Generator
+                        ta = ( item['Amount'] for item in list )
+
+                        for a in ta:
+                            total_amount +=a
+                            total_recipients +=1
+
+                        return render_to_response(
+                                'bulk/review.html',
+                                {
+                                    'form': form,
+                                    'list':list,
+                                    'name':name,
+                                    'size':size,
+                                    'content_type':content_type,
+                                    'charset':charset,
+                                    'total':total_amount,
+                                    'recipients':total_recipients,
+                                },
+                            context_instance=RequestContext(request))
+                    else:
+                        return HttpResponseBadRequest('wrong content type file uploaded')
                 else:
                     return HttpResponseBadRequest()
         else:
