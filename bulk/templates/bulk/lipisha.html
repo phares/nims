@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <title>Nims lipisha</title>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+          <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <title></title>
+</head>
+<body>
+
+<div class="container">
+<div class="row">
+
+
+
+  <div class="col-sm-4">
+        <h3>Balance</h3>
+        Balance : {{content.balance}} <br/>
+        Currency : {{content.currency}} <br/>
+
+        Status : {{status.status}} <br/>
+        Status code : {{status.status_code}} <br/>
+        Status description : {{status.status_description}} <br/>
+  </div>
+
+  <div class="col-sm-4">
+        <h3>Float</h3>
+        Balance : {{float_content.float}} <br/>
+        Currency : {{float_content.currency}} <br/>
+
+        Status : {{float_status.status}} <br/>
+        Status code : {{float_status.status_code}} <br/>
+        Status description : {{float_status.status_description}} <br/>
+        Account number : {{float_content.account_number}} <br/>
+  </div>
+
+
+  <div class="col-sm-4">
+
+        <h3>Send Airtime</h3>
+        Amount : {{send_airtime_content.amount}}<br/>
+        Customer number  : {{send_airtime_content.customer_number}}<br/>
+        Reference :  : {{send_airtime_content.reference}}<br/>
+
+        Status : {{send_airtime_status.status}}<br/>
+        Status code  : {{send_airtime_status.status_code}}<br/>
+        Status description : {{send_airtime_status.status_description}}<br/>
+  </div>
+      <div class="col-sm-4">
+        <h3>Send Money</h3>
+        Amount : {{send_money_content.amount}}<br/>
+        Customer name  : {{send_money_content.customer_name}}<br/>
+        Customer number  : {{send_money_content.customer_number}}<br/>
+        Reference :  : {{send_money_content.reference}}<br/>
+
+        Status : {{send_money_status.status}}<br/>
+        Status code  : {{send_money_status.status_code}}<br/>
+        Status description : {{send_money_status.status_description}}<br/>
+</div>
+
+      <div class="col-sm-4">
+        <h3>Authorize Card Transaction</h3>
+        Transaction index : {{authorize_card_transaction_content.transaction_index}}<br/>
+        Transaction reference : {{authorize_card_transaction_content.transaction_reference}}<br/>
+
+        Status : {{authorize_card_transaction_status.status}}<br/>
+        Status code : {{authorize_card_transaction_status.status_code}}<br/>
+        Status description : {{authorize_card_transaction_status.status_description}}<br/>
+      </div>
+
+
+  <div class="col-sm-4">
+        <h3>Create Account</h3>
+        Name : {{create_content.transaction_account_name}} <br/>
+        Manager : {{create_content.transaction_account_manager}} <br/>
+        Type : {{create_content.transaction_account_type}} <br/>
+
+        Status : {{create_status.status}} <br/>
+        Status code : {{create_status.status_code}} <br/>
+        Status description : {{create_status.status_description}} <br/>
+        Account number : {{float_content.account_number}} <br/>
+  </div>
+
+
+      <div class="col-sm-4">
+
+        <h3>Confirm Transaction</h3>
+        Transaction status : {{confirm_content.transaction_status}}<br/>
+        Transaction Method : {{confirm_content.transaction_method}}<br/>
+        Transaction : {{confirm_content.transaction}}<br/>
+        Date : {{confirm_content.transaction_date}}<br/>
+        Account name : {{confirm_content.transaction_account_name}}<br/>
+        Type : {{confirm_content.transaction_type}}<br/>
+        Mobile : {{confirm_content.transaction_mobile_number}}<br/>
+        Email : {{confirm_content.transaction_email}}<br/>
+        Transaction Name : {{confirm_content.transaction_name}}<br/>
+        Transaction Reference : {{confirm_content.transaction_reference}}<br/>
+        Amount : {{confirm_content.transaction_amount}} <br/>
+
+        Status : {{confirm_status.status}} <br/>
+        Status code : {{confirm_status.status_code}} <br/>
+        Status description : {{confirm_status.status_description}} <br/>
+        Account number : {{confirm_content.transaction_account_number}} <br/>
+
+  </div>
+
+    <div class="col-sm-4">
+
+                <h3>Withdrawal account</h3>
+        Status : {{create_withdrawal_account_status.status}} <br/>
+        Status code : {{create_withdrawal_account_status.status_code}} <br/>
+        Status description : {{create_withdrawal_account_status.status_description}} <br/>
+        <br/>
+        Address : {{create_withdrawal_account_content.transaction_account_bank_address}} <br/>
+        Bank Name : {{create_withdrawal_account_content.transaction_account_bank_name}} <br/>
+        Manager : {{create_withdrawal_account_content.transaction_account_manager}} <br/>
+        Account Name : {{create_withdrawal_account_content.transaction_account_name}} <br/>
+        Account Number : {{create_withdrawal_account_content.transaction_account_number}} <br/>
+        Swift Code : {{create_withdrawal_account_content.transaction_account_swift_code}} <br/>
+        Account Type : {{create_withdrawal_account_content.transaction_account_type}} <br/>
+
+    </div>
+
+      <div class="col-sm-12">
+
+        <h3>Customers</h3>
+        Status : {{customers_status.status}} <br/>
+        Status code : {{customers_status.status_code}} <br/>
+        Status description : {{customers_status.status_description}} <br/>
+
+        {% for c in customers_content %}
+          <div class="col-sm-4">
+            Customer Average : {{c.customer_average}} <br/>
+            First Payment Date : {{c.customer_first_payment_date}}<br/>
+            Last Payment Date : {{c.customer_last_payment_date}}<br/>
+            Customer name : {{c.customer_name}}<br/>
+            Mobile : {{c.customer_mobile_number}}<br/>
+            Email : {{c.customer_email}}<br/>
+            Customer Payments : {{c.customer_payments}}<br/>
+            Total : {{c.customer_total}} <br/>
+              </div>
+          {% endfor %}
+
+  </div>
+
+
+
+  <div class="col-sm-12">
+        <h3>Get Transactions</h3>
+
+        Status : {{get_status.status}} <br/>
+        Status code : {{get_status.status_code}} <br/>
+        Status description : {{get_status.status_description}} <br/>
+        Account number : {{get_content.transaction_account_number}} <br/>
+
+      {% for t in get_content %}
+        <div class="col-sm-4">
+            Transaction Reversal Status id : {{t.transaction_reversal_status_id}} <br/>
+            Transaction status : {{t.transaction_status}}<br/>
+            Transaction Method : {{t.transaction_method}}<br/>
+            Transaction : {{t.transaction}}<br/>
+            Date : {{t.transaction_date}}<br/>
+            Account name : {{t.transaction_account_name}}<br/>
+            Type : {{t.transaction_type}}<br/>
+            Mobile : {{t.transaction_mobile_number}}<br/>
+            Email : {{t.transaction_email}}<br/>
+            Transaction Name : {{t.transaction_name}}<br/>
+            Transaction Reference : {{t.transaction_reference}}<br/>
+            Amount : {{t.transaction_amount}} <br/>
+            </div>
+      {% endfor %}
+
+  </div>
+
+
+
+</div>
+    </div>
+</body>
+</html>
+
