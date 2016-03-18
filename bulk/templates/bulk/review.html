@@ -42,7 +42,7 @@
                                                     <td>{{p.LastName}}</td>
                                                     <td>{{p.FirstName}}</td>
                                                     <td>+{{p.Phone}}</td>
-                                                    <td class="align-right">{{p.Amount|floatformat:2|intcomma}}</td>
+                                                    <td>{% if p.Amount %}{{p.Amount|floatformat:2|intcomma}} {% else %} <small><h5 style="color:red;">Error</h5></small> {% endif %}</td>
                                                   </tr>
                                                 {% endfor %}
 
@@ -61,36 +61,38 @@
                         <!-- END DEFAULT DATATABLE -->
 
                     <form method="" action="/bulk/status/">
+                        {% if messages %}
+                        <div class="upload-buttons table">
+                            <button type="submit" class="btn btn-primary" disabled align="right" data-toggle="" data-target="" >SEND</button>
+                            <hr/>
+                            <p style="color:red;">To continue, fix the errors on your document listed below first</p>
+                        </div>
+                        {% else %}
                         <div class="upload-buttons table">
                             <button type="submit" class="btn btn-primary" align="right" data-toggle="" data-target="" >SEND</button>
                         </div>
-
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="myModalLabel">Payment Scheduled. </h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Hi User,</p>
-                                        <p>Your payment has successfully been scheduled.</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {% endif %}
 
 
                 </form>
 
 
-                                <!-- Modal -->
+			<!-- Django Messages -->
+			<div class="instructions">
+					{% if messages %}
+					<div class="messages">
+						{% for message in messages %}
+						<h5 {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+							{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+							{{ message }}
+						</h5>
+						{% endfor %}
+					</div>
+                <hr/>
+					{% endif %}
+			</div>
 
-
+			<!-- End Django Messages -->
 
             </div>
         </div>

@@ -11,6 +11,7 @@ import django_excel as excel
 import pyexcel.ext.xls
 import pyexcel.ext.xlsx
 import pyexcel.ext.ods3
+import re
 
 global list
 global a
@@ -40,7 +41,11 @@ def landing(request):
 
 def upload(request):
     data_struct_type = "records"
-    content_types = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
+    #Supported file content types
+    content_types = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                     'application/vnd.ms-excel',
+                     'application/vnd.oasis.opendocument.spreadsheet'
+                     ]
     max_upload_size = 5242880 #5MB
     if request.user.is_authenticated():
         list = {}
@@ -51,46 +56,90 @@ def upload(request):
         total_amount = 0
         total_recipients = 0
 
-
+        #check if the form action is post then proceed else display the upload form page
         if request.method == "POST":
             form = UploadFileForm(request.POST, request.FILES)
+            #check if the form is valid
             if form.is_valid():
                 filehandle = request.FILES['file']
-                if data_struct_type == "records":
-                    list= filehandle.get_records()
-                    name = filehandle.name
-                    size = filehandle.size
-                    content_type = filehandle.content_type
-                    charset = filehandle.charset
+                content_type = filehandle.content_type
+                size = filehandle.size
+                #check the size of file uploaded if it is equal to or less than the given size proceed else returns Http bad request message
+                if size > max_upload_size:
+                     return HttpResponseBadRequest('file size too big, maintain below 5 mbs')
+                if form.is_valid() and content_type in content_types:
+                    try:
 
-                    if content_type in content_types:
-                        if size > max_upload_size:
-                            return HttpResponseBadRequest('file size too big, maintain below 5 mbs')
+                        list= filehandle.get_records()
+                        name = filehandle.name
+                        charset = filehandle.charset
+                        rule = re.compile(r'^(?:\254)?[0|7]\d{9,13}$')
 
-                        #Generator
-                        ta = ( item['Amount'] for item in list )
+                        if data_struct_type == "records":
+                            for k in list:
+                                if not (k.has_key('Phone') and k.has_key('Amount') and k.has_key('FirstName') and k.has_key('LastName')):
+                                    messages.success(request, "File does not contain all required heading fields | FirstName | LastName | Phone | Amount | ")
+                                    form = UploadFileForm()
+                                    return render_to_response(
+                                        'bulk/upload.html',
+                                        {
+                                            'form': form,
+                                            'content_type':content_type,
+                                        },
+                                        context_instance=RequestContext(request))
 
-                        for a in ta:
-                            total_amount +=a
-                            total_recipients +=1
 
-                        return render_to_response(
-                                'bulk/review.html',
-                                {
-                                    'form': form,
-                                    'list':list,
-                                    'name':name,
-                                    'size':size,
-                                    'content_type':content_type,
-                                    'charset':charset,
-                                    'total':total_amount,
-                                    'recipients':total_recipients,
-                                },
-                            context_instance=RequestContext(request))
-                    else:
-                        return HttpResponseBadRequest('wrong content type file uploaded')
+                            #Generator
+                            #try:
+                             #   ta = ( item['Amount'] for item in list ) #Get amount from list
+                              #  vp = ( item['Phone'] for item in list ) #Get Phone number from list
+                            #except Exception as e:
+                             #   messages.success(request, "amount record not found %s" %(ta,e))
+                              #  messages.success(request, "phone record not found %s" %(vp,e))
+
+
+                            #for p in vp:
+                             #      if not rule.search(str(p)):
+                              #         messages.success(request, "invalid entries %s" %(p))
+
+                            for a in list:
+                                try:
+                                    fname = a['FirstName']
+                                    lname = a['LastName']
+                                    phone = a['Phone']
+                                    amount = a['Amount']
+                                    total_amount +=amount
+                                    total_recipients +=1
+                                except Exception as e:
+                                    messages.success(request, "invalid entry | %s | %s | %s | %s | %s |" %(fname,lname,phone,amount,e))
+
+
+                            return render_to_response(
+                                    'bulk/review.html',
+                                    {
+                                        'form': form,
+                                        'list':list,
+                                        'name':name,
+                                        'size':size,
+                                        'content_type':content_type,
+                                        'charset':charset,
+                                        'total':total_amount,
+                                        'recipients':total_recipients,
+                                    },
+                                context_instance=RequestContext(request))
+
+                        else:
+                            return HttpResponseBadRequest("error")
+                    except Exception as e:
+                        print e #Need to display a message to the user about this exception
+                        #messages.success(request, "Err! None supported file type uploaded")
+                        messages.success(request, "Sorry an error occured %s" %e)
                 else:
-                    return HttpResponseBadRequest()
+                    messages.success(request, "Wrong file format uploaded")
+
+            #end of check if form.is_valid()
+
+        #display this form if the form action is not post
         else:
             form = UploadFileForm()
         return render_to_response(

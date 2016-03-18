@@ -11,12 +11,12 @@
 	<div class="row">
 		<div class="instructions">
 			<h1>To Make Payments:</h1>
-			<p>Upload an <span>Excel</span> or <span>CSV</span> file with a list of one or more recepients
-			</p>
+			<p>Upload an <span>Excel</span> file with a list of one or more recepients</p>
+
 			<p class="more-instructions"><a href="#collapse-instructions" aria-expanded="false" aria-controls="collapseInstructions" data-toggle="collapse">click for instructions</a></p>
 
 			<div class="collapse" id="collapse-instructions">
-				<p>1) Upload an Excel or CSV file</p>
+				<p>1) Upload an Excel file</p>
 				<p>2) View your information in a table</p>
 				<p>3) Send your payments</p>
 			</div>
@@ -29,9 +29,15 @@
 				</p>
 			<br/>
 			{% endif %}
-				<form action="" method="POST" enctype="multipart/form-data" class="upload-form">
 
+				<form id="fileForm" action="" method="POST" enctype="multipart/form-data" class="upload-form">
 					{{ form.as_table }}
+<!--
+						<ul class="errorlist">you are required to upload a file</ul>
+					    <label for="id_file">File:</label>
+							<input id="id_file" name="file" type="file">
+						<input type="hidden" name="" value="">
+						</button>-->
 
 					{% csrf_token %}
 
@@ -39,18 +45,28 @@
 				</form>
 
 
-			    <script>
-                    $(document).ready(function () {
-                    $('input[type=file]').change(function () {
-                    var val = $(this).val().toLowerCase();
-                    var regex = new RegExp("(.*?)\.(xlsx|csv)$");
-                    if(!(regex.test(val))) {
-                        $(this).val('');
-                        alert('Please upload an Excel or CSV file');
-                    } }); });
-                </script>
+			<!-- Django Messages -->
+<br/>
 
 
+			<div>
+					{% if messages %}
+				<br/>
+				<p style="color:red;">The system encountered this errors, fix them to proceed</p>
+					<div class="messages">
+						{% for message in messages %}
+						<h5 {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+							{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+							{{ message }}
+						</h5>
+						{% endfor %}
+					</div>
+					{% endif %}
+			</div>
+
+			<!-- End Django Messages -->
+
+	<script>$("#fileForm").validate();</script>
 
 
 			</div>
@@ -60,5 +76,4 @@
 
 	</div>
 </div>
-
 {% endblock content %}

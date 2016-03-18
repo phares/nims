@@ -12,7 +12,7 @@
           <ul class="nav navbar-nav navbar-right">
 
             {% if request.user.is_authenticated  %}
-            <li class=""><a href="/bulk/index/">Upload</a></li>
+            <li class=""><a href="/bulk/">Upload</a></li>
             <li class=""><a href="{% url 'auth_logout' %}">Logout</a></li>
             <li class=""><a href="#">{{ request.user }} </a></li>
             {% else %}
