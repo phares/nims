@@ -172,7 +172,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 #Django registration redux settings
 ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window; you may, of course, use a different value.
 REGISTRATION_AUTO_LOGIN = True
-SITE_ID = 1
+SITE_ID = 2
 LOGIN_REDIRECT_URL = '/bulk/'
 
 FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
