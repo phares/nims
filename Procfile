@@ -1,0 +1,1 @@
+web: gunicorn nims30.wsgi --log-file -

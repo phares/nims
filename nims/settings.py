@@ -177,3 +177,8 @@ LOGIN_REDIRECT_URL = '/bulk/'
 
 FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
                         "django_excel.TemporaryExcelFileUploadHandler")
+
+TEMPLATE_DIRS = (
+    os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "templates"),
+    #                                                     missing parens ---------^
+)
