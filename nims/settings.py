@@ -106,8 +106,8 @@ DATABASES = {
         'NAME': 'bulk',
         'USER': 'postgres',
         'PASSWORD': 'password',
-        'HOST': 'nims30.herokuapp.com',
-        'PORT': '5432',
+        'HOST': 'ec2-123-73-145-214.compute-1.amazonaws.com',
+        'PORT': '6212',
     }
 }
 
