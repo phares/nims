@@ -1,0 +1,97 @@
+ {% extends 'base.html' %}
+
+
+ {% load staticfiles %}
+
+{% block title %} NIMS | upload review {% endblock title %}
+
+{% block content %}
+
+ {% load humanize %}
+
+ {% include 'navbar.html' %}
+
+<div class="container">
+    <div class="page-content">
+        <!-- PAGE CONTENT WRAPPER -->
+            <div class="page-content-wrap">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="review-heading">account</h1>
+                        <p align="right" style="color:green;"><small>balance {{ balance.currency }} {{ balance.balance|floatformat:2|intcomma }}</small></p>
+                        <!-- START DEFAULT DATATABLE -->
+                        <div class="panel panel-default">
+
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>Reversal Status id</th>
+                                                <th>status</th>
+                                                <th>Method</th>
+                                                <th>Transaction</th>
+                                                <th>Date</th>
+                                                <th>Account name</th>
+                                                <th>Type</th>
+                                                <th>Mobile</th>
+                                                <th>Email</th>
+                                                <th>Name</th>
+                                                <th>Reference</th>
+                                                <th>Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                                {% for t in transactions %}}
+                                                  <tr>
+                                                    <td>{{t.transaction_reversal_status_id}}</td>
+                                                    <td>{{t.transaction_status}}</td>
+                                                    <td>{{t.transaction_method}}</td>
+                                                    <td> {{t.transaction}}</td>
+                                                    <td>{{t.transaction_date}}</td>
+                                                    <td>{{t.transaction_account_name}}</td>
+                                                    <td>{{t.transaction_type}}</td>
+                                                    <td>{{t.transaction_mobile_number}}</td>
+                                                    <td>{{t.transaction_email}}</td>
+                                                    <td>{{t.transaction_name}}</td>
+                                                    <td>{{t.transaction_reference}}</td>>
+                                                    <td>{{t.transaction_amount}}</td>
+                                                  </tr>
+                                                {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END DEFAULT DATATABLE -->
+
+
+
+			<!-- Django Messages -->
+			<div class="instructions">
+					{% if messages %}
+					<div class="messages">
+						{% for message in messages %}
+						<h5 {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+							{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+							{{ message }}
+						</h5>
+						{% endfor %}
+					</div>
+                <hr/>
+					{% endif %}
+			</div>
+
+			<!-- End Django Messages -->
+
+            </div>
+        </div>
+
+    </div>
+                <!-- PAGE CONTENT WRAPPER -->
+</div>
+</div>
+{% endblock content %}
+

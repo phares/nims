@@ -9,10 +9,29 @@
 <div class="container">
 	<div class="row">
 		<div class="instructions">
-			<h1>Payment succesfully sent</h1>
+			<h1>Payment Status</h1>
 
 
            <!-- {{mydata}} -->
+
+			{{ list }}
+
+			<!-- Django Messages -->
+			<div class="instructions">
+					{% if messages %}
+					<div class="messages">
+						{% for message in messages %}
+						<h5 {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+							{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+							{{ message }}
+						</h5>
+						{% endfor %}
+					</div>
+                <hr/>
+					{% endif %}
+			</div>
+
+			<!-- End Django Messages -->
 
 
 			<p class="more-instructions"><span><a href="#">View payment reports</a></span>

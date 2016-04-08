@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^review/$', views.review, name='review'),
     url(r'^status/$', views.status, name='status'),
     url(r'^create/$', views.create, name='create'),
+    url(r'^account/$', views.account, name='account'),
     url(r'^lipisha/$', views.lipisha_, name='lipisha'),
     url(r'^test/$', views.test, name='test'),
     url(r'^test/(?P<id>\d+)/$', views.test_detail, name='test_detail'),

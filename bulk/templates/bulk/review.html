@@ -18,6 +18,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="review-heading">Review and Send</h1>
+                        <p align="right" style="color:green;"><small>balance {{ balance.currency }} {{ balance.balance|floatformat:2|intcomma }}</small></p>
                         <!-- START DEFAULT DATATABLE -->
                         <div class="panel panel-default">
 
@@ -60,7 +61,7 @@
                         </div>
                         <!-- END DEFAULT DATATABLE -->
 
-                    <form method="" action="/bulk/status/">
+                    <form method="POST" action="/bulk/status/">
                         {% if messages %}
                         <div class="upload-buttons table">
                             <button type="submit" class="btn btn-primary" disabled align="right" data-toggle="" data-target="" >SEND</button>
@@ -69,9 +70,11 @@
                         </div>
                         {% else %}
                         <div class="upload-buttons table">
-                            <button type="submit" class="btn btn-primary" align="right" data-toggle="" data-target="" >SEND</button>
+                            <button type="submit" class="btn btn-primary" align="right" data-toggle="" data-target="" name="send">SEND</button>
                         </div>
                         {% endif %}
+
+                        {% csrf_token %}
 
 
                 </form>
