@@ -35,7 +35,7 @@ STATICFILES_DIRS = (
 SECRET_KEY = 't&2c%th8c7i)#frpio@hjyo@6oz-mc_^!&k=*nw3b(*g4718r*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 #ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 ALLOWED_HOSTS = ['*']
