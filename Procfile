@@ -1,1 +1,1 @@
-web: gunicorn nims30.wsgi --log-file -
+web: gunicorn nims.wsgi --log-file -
