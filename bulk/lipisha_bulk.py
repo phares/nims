@@ -72,10 +72,7 @@ class Lipisha_bulk():
         #send money
         #account_number="01260"
         def send_money(self, account_number, mobile_number, amount):
-            send_money = lipisha.send_money(account_number, mobile_number, amount)
-
-            send_money_content = send_money['content']
-            send_money_status = send_money['status']
+            lipisha.send_money(account_number, mobile_number, amount)
 
         #authorize card transaction
         def authorize_card_transaction(self,account_number, card_number, address1 , address2, expiry, name, country, state, zip, security_code, amount, currency):

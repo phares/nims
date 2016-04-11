@@ -76,15 +76,6 @@ def upload(request):
                      return HttpResponseBadRequest('file size too big, maintain below 5 mbs')
                 if form.is_valid() and content_type in content_types:
 
-                    #check balance
-                    b = Lipisha_bulk()
-                    balance = b.get_balance()
-
-                    f = Lipisha_bulk()
-                    float = f.get_float(01260)
-
-
-
                     try:
 
                         list= filehandle.get_records()
@@ -190,7 +181,13 @@ def status(request):
 
         if request.user.is_authenticated():
 
-            if not request.user.is_staff:
+            if request.user.is_staff:
+
+                api_key = "54e2ffe282f3bdf63e20bcd2977b5ad9"
+                api_signature = "alJC5xPr7bmDgNjdiCtwZMjwUiDwevQIGdXs37tDmOSgLrihbTYY5kBn8hJC9lYg8Xa1mu8U7NPWb2x61mG1Ifbp0wYyBJZ0kpKK1WYtXMBHrZq2daY7nlWnTHIx5SSU1phSTuCogTovk19OoffUVjN92nlkLmlV4qcb5+kcJF0="
+                lipisha = Lipisha(api_key, api_signature, api_environment='live')
+                lipisha.api_base_url
+                'https://lipisha.com/payments/accounts/index.php/v2/api'
 
                 for a in list:
                     fname = str(a['FirstName'])
@@ -200,11 +197,10 @@ def status(request):
 
                     try:
                         # send money
-                        s = Lipisha_bulk()
-                        send = s.send_money(01260,phone,amount)
-                        send_status = send['status']
-
-                        messages.success(request, send_status)
+                        send_money = lipisha.send_money(account_number="01260", mobile_number=phone, amount=amount)
+                        send_money_content = send_money['content']
+                        send_money_status = send_money['status']
+                        messages.success(request, send_money_status)
 
                     except Exception as e:
                         messages.success(request, "error")
