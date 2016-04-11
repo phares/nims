@@ -195,27 +195,33 @@ def status(request):
 
         if request.user.is_authenticated():
 
-            api_key = "54e2ffe282f3bdf63e20bcd2977b5ad9"
-            api_signature = "alJC5xPr7bmDgNjdiCtwZMjwUiDwevQIGdXs37tDmOSgLrihbTYY5kBn8hJC9lYg8Xa1mu8U7NPWb2x61mG1Ifbp0wYyBJZ0kpKK1WYtXMBHrZq2daY7nlWnTHIx5SSU1phSTuCogTovk19OoffUVjN92nlkLmlV4qcb5+kcJF0="
-            lipisha = Lipisha(api_key, api_signature, api_environment='test')
-            lipisha.api_base_url
-            'http://lipisha.com/index.php/v2/api/'
+            if request.user.is_staff():
 
-            for a in list:
-                fname = str(a['FirstName'])
-                lname = str(a['LastName'])
-                phone = str(a['Phone'])
-                amount = str(a['Amount'])
+                api_key = "54e2ffe282f3bdf63e20bcd2977b5ad9"
+                api_signature = "alJC5xPr7bmDgNjdiCtwZMjwUiDwevQIGdXs37tDmOSgLrihbTYY5kBn8hJC9lYg8Xa1mu8U7NPWb2x61mG1Ifbp0wYyBJZ0kpKK1WYtXMBHrZq2daY7nlWnTHIx5SSU1phSTuCogTovk19OoffUVjN92nlkLmlV4qcb5+kcJF0="
+                lipisha = Lipisha(api_key, api_signature, api_environment='test')
+                lipisha.api_base_url
+                'http://lipisha.com/index.php/v2/api/'
 
-                try:
-                    # send money
-                    send_money = lipisha.send_money(account_number="01260", mobile_number=phone, amount=amount)
-                    send_money_content = send_money['content']
-                    send_money_status = send_money['status']
-                    messages.success(request, send_money_status)
+                for a in list:
+                    fname = str(a['FirstName'])
+                    lname = str(a['LastName'])
+                    phone = str(a['Phone'])
+                    amount = str(a['Amount'])
 
-                except Exception as e:
-                    messages.success(request, "error")
+                    try:
+                        # send money
+                        send_money = lipisha.send_money(account_number="01260", mobile_number=phone, amount=amount)
+                        send_money_content = send_money['content']
+                        send_money_status = send_money['status']
+                        messages.success(request, send_money_status)
+
+                    except Exception as e:
+                        messages.success(request, "error")
+
+            else:
+
+                messages.success(request, "only staff users can execute this operation")
 
 
             data = {
