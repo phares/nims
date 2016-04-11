@@ -197,7 +197,7 @@ def status(request):
 
                     try:
                         # send money
-                        send_money = lipisha.send_money(account_number="01260", mobile_number=phone, amount=amount)
+                        send_money = lipisha.send_money(account_number="05304", mobile_number=phone, amount=amount)
                         send_money_content = send_money['content']
                         send_money_status = send_money['status']
                         messages.success(request, send_money_status)
