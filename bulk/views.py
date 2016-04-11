@@ -16,8 +16,8 @@ from lipisha import Lipisha
 import re
 from lipisha_bulk import Lipisha_bulk
 
-api_key = "03f224d09e145da07deee57f1abc5f10"
-api_signature = "jfltQtfWgq9n9JsnTAsH0qMQa90eZP2dI3/XZY89bnh9iesIJ47XslNF0BmWJPFcVQU1EjDS5d2Yc5ssXEW/z+h/WLtYZ9gJtTIBt2Y6hbw34HoZCyHPJIZEElwhbTKTGZm4Z86ZmC2eSZEbEQ9BLOFJrjW7cG9WYhG0WRJMONk="
+api_key = "0e6e25e7cc17631a794454bff4f6e20e"
+api_signature = "KAtYL0ivt8Nv0ih5tAqxH2oYv9KxergMh1SSVETtlYuu5JENb8OM4VgEUVp+e9C1S2jM84obO6Cio5h3ViQAKbAcpGM2Xt3c1xMPKFjIuOPHI6FbJLXS8pqTIPNI7pkqZw/kvETiCHL8FKH3uaS4BG7CCVQPs43lVNIPc0sYzR0="
 api_environment='live'
 
 list = {}
@@ -198,7 +198,7 @@ def status(request):
 
                     try:
                         # send money
-                        send_money = lipisha.send_money(account_number="05304", mobile_number=phone, amount=amount)
+                        send_money = lipisha.send_money(account_number="05307", mobile_number=phone, amount=amount)
                         send_money_content = send_money['content']
                         send_money_status = send_money['status']
                         messages.success(request, send_money_status)

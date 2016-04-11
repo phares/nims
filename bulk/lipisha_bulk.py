@@ -1,8 +1,8 @@
 import lipisha
 from lipisha import Lipisha
 
-api_key = "54e2ffe282f3bdf63e20bcd2977b5ad9"
-api_signature = "alJC5xPr7bmDgNjdiCtwZMjwUiDwevQIGdXs37tDmOSgLrihbTYY5kBn8hJC9lYg8Xa1mu8U7NPWb2x61mG1Ifbp0wYyBJZ0kpKK1WYtXMBHrZq2daY7nlWnTHIx5SSU1phSTuCogTovk19OoffUVjN92nlkLmlV4qcb5+kcJF0="
+api_key = ""
+api_signature = ""
 lipisha = Lipisha(api_key, api_signature, api_environment='live')
 lipisha.api_base_url
 'https://lipisha.com/payments/accounts/index.php/v2/api'
