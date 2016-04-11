@@ -136,6 +136,7 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
@@ -143,6 +144,11 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media_cdn")
+
+
+
+
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 #Django registration redux settings

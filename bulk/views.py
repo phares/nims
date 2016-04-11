@@ -14,11 +14,9 @@ import pyexcel.ext.ods3
 import lipisha
 from lipisha import Lipisha
 import re
+from lipisha_bulk import Lipisha_bulk
 
 global list
-global a
-global b
-global c
 
 # Create your views here.
 class UploadFileForm(forms.Form):
@@ -57,6 +55,8 @@ def upload(request):
         charset = []
         total_amount = 0
         total_recipients = 0
+        balance = 'null'
+
 
         #check if the form action is post then proceed else display the upload form page
         if request.method == "POST":
@@ -70,12 +70,30 @@ def upload(request):
                 if size > max_upload_size:
                      return HttpResponseBadRequest('file size too big, maintain below 5 mbs')
                 if form.is_valid() and content_type in content_types:
+
+                    #check balance
+                    b = Lipisha_bulk()
+                    balance = b.get_balance()
+
+
+
                     try:
 
                         list= filehandle.get_records()
                         name = filehandle.name
                         charset = filehandle.charset
-                        rule = re.compile(r'^(?:\254)?[0|7]\d{9,13}$')
+                        #rule = re.compile(r'^(?:\254)?[7]\d{9,13}$')
+                        # \d represents any number
+                        # \D represents anything but a number
+                        # \s represents any space
+                        # \S anything but a space
+                        # \w any character
+                        # \W anything but a char
+                        # . any character except for a line break
+                        #  \b matches a space that follows or proceeds a whole word
+                        # ? 0 0r 1 repitations of the proceeding code
+                        # * 0 or more repetitions
+                        # {n} n of code that proceeds it #
 
                         if data_struct_type == "records":
                             for k in list:
@@ -100,20 +118,26 @@ def upload(request):
                               #  messages.success(request, "phone record not found %s" %(vp,e))
 
 
-                            #for p in vp:
-                             #      if not rule.search(str(p)):
-                              #         messages.success(request, "invalid entries %s" %(p))
-
                             for a in list:
+                                fname = str(a['FirstName'])
+                                lname = str(a['LastName'])
+                                phone = str(a['Phone'])
+                                amount = str(a['Amount'])
+
                                 try:
-                                    fname = a['FirstName']
-                                    lname = a['LastName']
-                                    phone = a['Phone']
-                                    amount = a['Amount']
-                                    total_amount +=amount
-                                    total_recipients +=1
+                                    if (amount.isdigit() and phone.isdigit() and (100<int(amount)<70000)):
+                                        total_amount +=int(amount)
+                                        total_recipients +=1
+                                        #a['Error'] = "error"; # Add new entry
+                                    else:
+                                        messages.success(request, "not int | %s | %s | %s | %s | %s |" %(fname,lname,phone,amount,e))
+                                        list.remove(a)
+
                                 except Exception as e:
                                     messages.success(request, "invalid entry | %s | %s | %s | %s | %s |" %(fname,lname,phone,amount,e))
+                                    list.remove(a)
+
+
 
 
                             return render_to_response(
@@ -127,6 +151,7 @@ def upload(request):
                                         'charset':charset,
                                         'total':total_amount,
                                         'recipients':total_recipients,
+                                        'balance':balance,
                                     },
                                 context_instance=RequestContext(request))
 
@@ -155,6 +180,26 @@ def upload(request):
                 'charset':charset,
             },
             context_instance=RequestContext(request))
+    else:
+        return redirect("/accounts/login")
+
+def account(request):
+
+    if request.user.is_authenticated():
+
+        b = Lipisha_bulk()
+        balance = b.get_balance()
+
+        transactions = b.get_transactions()
+
+        return render_to_response(
+        'bulk/account.html',
+        {
+            'balance':balance,
+            'transactions':transactions
+
+        },
+        context_instance=RequestContext(request))
     else:
         return redirect("/accounts/login")
 
@@ -262,8 +307,8 @@ def lipisha_(request):
 
     try:
 
-        api_key = "54e2ffe282f3bdf63e20bcd2977b5ad9"
-        api_signature = "alJC5xPr7bmDgNjdiCtwZMjwUiDwevQIGdXs37tDmOSgLrihbTYY5kBn8hJC9lYg8Xa1mu8U7NPWb2x61mG1Ifbp0wYyBJZ0kpKK1WYtXMBHrZq2daY7nlWnTHIx5SSU1phSTuCogTovk19OoffUVjN92nlkLmlV4qcb5+kcJF0="
+        api_key = "*************************************"
+        api_signature = "****************************************"
         lipisha = Lipisha(api_key, api_signature, api_environment='test')
         lipisha.api_base_url
         'http://lipisha.com/index.php/v2/api/'
