@@ -19,6 +19,9 @@ from lipisha_bulk import Lipisha_bulk
 api_key = "0e6e25e7cc17631a794454bff4f6e20e"
 api_signature = "KAtYL0ivt8Nv0ih5tAqxH2oYv9KxergMh1SSVETtlYuu5JENb8OM4VgEUVp+e9C1S2jM84obO6Cio5h3ViQAKbAcpGM2Xt3c1xMPKFjIuOPHI6FbJLXS8pqTIPNI7pkqZw/kvETiCHL8FKH3uaS4BG7CCVQPs43lVNIPc0sYzR0="
 api_environment='live'
+lipisha = Lipisha(api_key, api_signature, api_environment)
+lipisha.api_base_url
+'https://lipisha.com/payments/accounts/index.php/v2/api'
 
 list = {}
 balance = 0
@@ -108,6 +111,10 @@ def upload(request):
                               #  messages.success(request, "phone record not found %s" %(vp,e))
 
 
+                            f = lipisha.get_float(account_number="05307")
+                            float = f['content']
+
+
                             for a in list:
                                 fname = str(a['FirstName'])
                                 lname = str(a['LastName'])
@@ -180,15 +187,13 @@ def upload(request):
 
 def status(request):
 
+    global float
+
     if request.method == "POST":
 
         if request.user.is_authenticated():
 
             if request.user.is_staff:
-
-                lipisha = Lipisha(api_key, api_signature, api_environment)
-                lipisha.api_base_url
-                'https://lipisha.com/payments/accounts/index.php/v2/api'
 
                 for a in list:
                     fname = str(a['FirstName'])
@@ -212,6 +217,8 @@ def status(request):
 
 
             data = {
+
+                'float':float,
 
             }
             return render(request, 'bulk/status.html', data)
