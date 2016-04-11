@@ -16,6 +16,9 @@ from lipisha import Lipisha
 import re
 from lipisha_bulk import Lipisha_bulk
 
+api_key = "03f224d09e145da07deee57f1abc5f10"
+api_signature = "jfltQtfWgq9n9JsnTAsH0qMQa90eZP2dI3/XZY89bnh9iesIJ47XslNF0BmWJPFcVQU1EjDS5d2Yc5ssXEW/z+h/WLtYZ9gJtTIBt2Y6hbw34HoZCyHPJIZEElwhbTKTGZm4Z86ZmC2eSZEbEQ9BLOFJrjW7cG9WYhG0WRJMONk="
+api_environment='live'
 
 list = {}
 balance = 0
@@ -183,9 +186,7 @@ def status(request):
 
             if request.user.is_staff:
 
-                api_key = "96fd084f0686c29553b3ad910ca5f2a3"
-                api_signature = "+tYJkOM68Up33ZI8T9x3ylEg9Lz/S0a+hixgm+xLRcwXQ4Dcbmf37rugEpOSsFl7IDwUwbOBApcm8wrmmTd5RtjA+v1TUs7oqC8YdgdaWs7XKqxPjg9nFO9woMDxX/q337TCqRNy72NNUp7vjwOZZgi9RL/pNr786Gka9zCCgE8="
-                lipisha = Lipisha(api_key, api_signature, api_environment='live')
+                lipisha = Lipisha(api_key, api_signature, api_environment)
                 lipisha.api_base_url
                 'https://lipisha.com/payments/accounts/index.php/v2/api'
 
