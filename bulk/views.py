@@ -26,6 +26,7 @@ lipisha.api_base_url
 list = {}
 balance = 0
 float = 0
+payout = {}
 
 # Create your views here.
 class UploadFileForm(forms.Form):
@@ -192,8 +193,7 @@ def status(request):
 
     global float
     global balance
-
-    payout = {}
+    global payout
 
     f = lipisha.get_float(account_number="05307")
     float = f['content']
@@ -218,7 +218,7 @@ def status(request):
                             # send money
                             send_money = lipisha.send_money(account_number="05307", mobile_number=phone, amount=amount)
                             status = send_money['status']
-                            messages.success(request, status['status'])
+                            #messages.success(request, status['status'])
 
                             payout['status'] = status['status']
 
@@ -228,6 +228,8 @@ def status(request):
                 except Exception as e:
 
                     messages.success(request, e)
+
+                download_report(payout)
 
 
             else:
@@ -250,4 +252,9 @@ def status(request):
     else:
         return redirect("/bulk/")
 
+
+def download_report(payout):
+
+    sheet = excel.pe.Sheet([[1, 2],[3, 4]])
+    return excel.make_response(sheet, "csv")
 
