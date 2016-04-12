@@ -113,6 +113,8 @@ def upload(request):
 
                             f = lipisha.get_float(account_number="05307")
                             float = f['content']
+                            b = lipisha.get_balance()
+                            balance = b['content']
 
 
                             for a in list:
