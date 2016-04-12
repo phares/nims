@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from bulk.models import Transactions
 from .forms import PostForm
 from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
@@ -124,22 +123,12 @@ def upload(request):
                                 amount = str(a['Amount'])
 
                                 try:
-                                    if (amount.isdigit() and phone.isdigit() and (100<int(amount)<70000)):
-                                        total_amount +=int(amount)
-                                        total_recipients +=1
-                                        #a['Error'] = "error"; # Add new entry
-                                    else:
-                                        messages.success(request, "not int | %s | %s | %s | %s | %s |" %(fname,lname,phone,amount,e))
-                                        list.remove(a)
 
-                                except Exception as e:
-                                    messages.success(request, "invalid entry | %s | %s | %s | %s | %s |" %(fname,lname,phone,amount,e))
-                                    list.remove(a)
+                                    total_amount +=int(amount)
+                                    total_recipients +=1
 
 
-
-
-                            return render_to_response(
+                                    return render_to_response(
                                     'bulk/review.html',
                                     {
                                         'form': form,
@@ -153,18 +142,14 @@ def upload(request):
                                         'balance':balance,
                                         'float':float,
                                     },
-                                context_instance=RequestContext(request))
+                                                context_instance=RequestContext(request))
 
+                                except Exception as e:
+                                    messages.success(request, "Sorry an error occured %s" % e)
 
-
-
-
-                        else:
-                            return HttpResponseBadRequest("error")
                     except Exception as e:
-                        print e #Need to display a message to the user about this exception
-                        #messages.success(request, "Err! None supported file type uploaded")
-                        messages.success(request, "Sorry an error occured %s" %e)
+                        messages.success(request, "Sorry  error occured %s" %e)
+
                 else:
                     messages.success(request, "Wrong file format uploaded")
 
