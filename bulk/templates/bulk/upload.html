@@ -5,9 +5,12 @@
 
 {% block content %}
 
+ {% load humanize %}
+
  {% include 'navbar.html' %}
 
 <div class="container">
+	<p align="right" style="color:green;"><small>Balance {{ balance.currency }} {{ balance.balance|floatformat:2|intcomma }} || Float {{ float.currency }} {{ float.float|floatformat:2|intcomma }}</small></p>
 	<div class="row">
 		<div class="instructions">
 			<h1>To Make Payments:</h1>

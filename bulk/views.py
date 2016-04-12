@@ -25,7 +25,7 @@ lipisha.api_base_url
 
 list = {}
 balance = 0
-float = 'null'
+float = 0
 
 # Create your views here.
 class UploadFileForm(forms.Form):
@@ -68,6 +68,11 @@ def upload(request):
         total_amount = 0
         total_recipients = 0
 
+        f = lipisha.get_float(account_number="05307")
+        float = f['content']
+        b = lipisha.get_balance()
+        balance = b['content']
+
 
         #check if the form action is post then proceed else display the upload form page
         if request.method == "POST":
@@ -109,12 +114,6 @@ def upload(request):
                             #except Exception as e:
                              #   messages.success(request, "amount record not found %s" %(ta,e))
                               #  messages.success(request, "phone record not found %s" %(vp,e))
-
-
-                            f = lipisha.get_float(account_number="05307")
-                            float = f['content']
-                            b = lipisha.get_balance()
-                            balance = b['content']
 
 
                             for a in list:
@@ -182,6 +181,8 @@ def upload(request):
                 'size':size,
                 'content_type':content_type,
                 'charset':charset,
+                'balance': balance,
+                'float': float,
             },
             context_instance=RequestContext(request))
     else:
@@ -190,6 +191,14 @@ def upload(request):
 def status(request):
 
     global float
+    global balance
+
+    payout = {}
+
+    f = lipisha.get_float(account_number="05307")
+    float = f['content']
+    b = lipisha.get_balance()
+    balance = b['content']
 
     if request.method == "POST":
 
@@ -197,21 +206,29 @@ def status(request):
 
             if request.user.is_staff:
 
-                for a in list:
-                    fname = str(a['FirstName'])
-                    lname = str(a['LastName'])
-                    phone = str(a['Phone'])
-                    amount = str(a['Amount'])
+                try:
 
-                    try:
-                        # send money
-                        send_money = lipisha.send_money(account_number="05307", mobile_number=phone, amount=amount)
-                        send_money_content = send_money['content']
-                        send_money_status = send_money['status']
-                        messages.success(request, send_money_status)
+                    for a in list:
+                        fname = str(a['FirstName'])
+                        lname = str(a['LastName'])
+                        phone = str(a['Phone'])
+                        amount = str(a['Amount'])
 
-                    except Exception as e:
-                        messages.success(request, "error")
+                        try:
+                            # send money
+                            send_money = lipisha.send_money(account_number="05307", mobile_number=phone, amount=amount)
+                            status = send_money['status']
+                            messages.success(request, status['status'])
+
+                            payout['status'] = status['status']
+
+                        except Exception as e:
+                            messages.success(request, e)
+
+                except Exception as e:
+
+                    messages.success(request, e)
+
 
             else:
 
@@ -221,11 +238,16 @@ def status(request):
             data = {
 
                 'float':float,
+                'balance':balance
 
             }
             return render(request, 'bulk/status.html', data)
+
+
         else:
             return redirect("/accounts/login")
 
     else:
         return redirect("/bulk/")
+
+
