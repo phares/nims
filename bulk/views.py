@@ -203,11 +203,12 @@ def status(request):
                             # send money
                             send_money = lipisha.send_money(account_number="05307", mobile_number=phone, amount=amount)
                             status = send_money['status']
-                            messages.success(request, status['status_description'])
-                            messages.success(request, status['status'])
-                            messages.success(request, phone)
-                            messages.success(request, amount)
-                            messages.success(request, send_money)
+                            st = status['status']
+                            stdes = status['status_description']
+
+                            r = st + ' ' + stdes + ' ' + phone + ' ' + amount
+
+                            messages.success(request, r)
 
                             payout['status'] = status['status']
 
