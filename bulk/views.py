@@ -203,9 +203,10 @@ def status(request):
                             # send money
                             send_money = lipisha.send_money(account_number="05307", mobile_number=phone, amount=amount)
                             status = send_money['status']
-                            #messages.success(request, status['status'])
+                            messages.success(request, status['status'])
 
                             payout['status'] = status['status']
+                            messages.success(request, status)
 
                         except Exception as e:
                             messages.success(request, e)
