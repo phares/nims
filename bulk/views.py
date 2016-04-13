@@ -203,11 +203,9 @@ def status(request):
                             # send money
                             send_money = lipisha.send_money(account_number="05307", mobile_number=phone, amount=amount)
                             status = send_money['status']
-                            content = send_money['content']
-                            messages.success(request, status['status'])
+                            messages.success(request, status['status_description'])
 
                             payout['status'] = status['status']
-                            messages.success(request, content)
 
                         except Exception as e:
                             messages.success(request, e)
@@ -242,6 +240,6 @@ def status(request):
 
 def download_report(payout):
 
-    sheet = excel.pe.Sheet([[1, 2],[3, 4]])
+    sheet = excel.pe.Sheet([[payout, 2],[3, 4]])
     return excel.make_response(sheet, "csv")
 
