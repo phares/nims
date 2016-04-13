@@ -120,32 +120,32 @@ def upload(request):
                                 fname = str(a['FirstName'])
                                 lname = str(a['LastName'])
                                 phone = str(a['Phone'])
-                                amount = str(a['Amount'])
+                                amount = str(int(a['Amount']))
 
                                 try:
 
                                     total_amount +=int(amount)
                                     total_recipients +=1
 
-
-                                    return render_to_response(
-                                    'bulk/review.html',
-                                    {
-                                        'form': form,
-                                        'list':list,
-                                        'name':name,
-                                        'size':size,
-                                        'content_type':content_type,
-                                        'charset':charset,
-                                        'total':total_amount,
-                                        'recipients':total_recipients,
-                                        'balance':balance,
-                                        'float':float,
-                                    },
-                                                context_instance=RequestContext(request))
-
                                 except Exception as e:
                                     messages.success(request, "Sorry an error occured %s" % e)
+
+
+                            return render_to_response(
+                            'bulk/review.html',
+                            {
+                                'form': form,
+                                'list':list,
+                                'name':name,
+                                'size':size,
+                                'content_type':content_type,
+                                'charset':charset,
+                                'total':total_amount,
+                                'recipients':total_recipients,
+                                'balance':balance,
+                                'float':float,
+                            },
+                                        context_instance=RequestContext(request))
 
                     except Exception as e:
                         messages.success(request, "Sorry  error occured %s" %e)
@@ -197,16 +197,17 @@ def status(request):
                         fname = str(a['FirstName'])
                         lname = str(a['LastName'])
                         phone = str(a['Phone'])
-                        amount = str(a['Amount'])
+                        amount = str(int(a['Amount']))
 
                         try:
                             # send money
                             send_money = lipisha.send_money(account_number="05307", mobile_number=phone, amount=amount)
                             status = send_money['status']
+                            content = send_money['content']
                             messages.success(request, status['status'])
 
                             payout['status'] = status['status']
-                            messages.success(request, status)
+                            messages.success(request, content)
 
                         except Exception as e:
                             messages.success(request, e)
