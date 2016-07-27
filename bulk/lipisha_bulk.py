@@ -1,11 +1,19 @@
 import lipisha
 from lipisha import Lipisha
 
+<<<<<<< HEAD
 api_key = ""
 api_signature = ""
 lipisha = Lipisha(api_key, api_signature, api_environment='live')
 lipisha.api_base_url
 'https://lipisha.com/payments/accounts/index.php/v2/api'
+=======
+api_key = "**********************************"
+api_signature = "************************************************************************88"
+lipisha = Lipisha(api_key, api_signature, api_environment='test')
+lipisha.api_base_url
+'http://lipisha.com/index.php/v2/api/'
+>>>>>>> 1c397ea447c8373aebf3f07fe88b5cf2e784e640
 
 class Lipisha_bulk():
 
@@ -72,7 +80,14 @@ class Lipisha_bulk():
         #send money
         #account_number="01260"
         def send_money(self, account_number, mobile_number, amount):
+<<<<<<< HEAD
             lipisha.send_money(account_number, mobile_number, amount)
+=======
+            send_money = lipisha.send_money(account_number, mobile_number, amount)
+
+            send_money_content = send_money['content']
+            send_money_status = send_money['status']
+>>>>>>> 1c397ea447c8373aebf3f07fe88b5cf2e784e640
 
         #authorize card transaction
         def authorize_card_transaction(self,account_number, card_number, address1 , address2, expiry, name, country, state, zip, security_code, amount, currency):
