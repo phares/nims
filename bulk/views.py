@@ -221,9 +221,6 @@ def status(request):
 
                     messages.success(request, e)
 
-                download_report(payout)
-
-
             else:
 
                 messages.success(request, "only staff users can execute this operation")
@@ -247,6 +244,6 @@ def status(request):
 
 def download_report(payout):
 
-    sheet = excel.pe.Sheet([[payout, 2],[3, 4]])
+    sheet = excel.pe.Sheet([[float, balance]])
     return excel.make_response(sheet, "csv")
 
